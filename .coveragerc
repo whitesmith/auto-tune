@@ -1,0 +1,16 @@
+[paths]
+source =
+   src/auto_tune
+   */site-packages/auto_tune
+
+[run]
+branch = true
+source =
+    auto_tune
+    tests
+parallel = true
+
+[report]
+show_missing = true
+precision = 2
+omit = *migrations*

@@ -10,7 +10,7 @@ Overview
     * - docs
       - |docs|
     * - tests
-      - | |requires|
+      - | |travis| |requires|
         | |codecov|
         | |codacy|
     * - package
@@ -20,6 +20,10 @@ Overview
 .. |docs| image:: https://readthedocs.org/projects/auto-tune/badge/?style=flat
     :target: https://readthedocs.org/projects/auto-tune
     :alt: Documentation Status
+
+.. |travis| image:: https://travis-ci.org/whitesmith/auto-tune.svg?branch=master
+    :alt: Travis-CI Build Status
+    :target: https://travis-ci.org/whitesmith/auto-tune
 
 .. |requires| image:: https://requires.io/github/whitesmith/auto-tune/requirements.svg?branch=master
     :alt: Requirements Status

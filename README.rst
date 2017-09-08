@@ -10,9 +10,8 @@ Overview
     * - docs
       - |docs|
     * - tests
-      - | |travis| |requires|
+      - | |travis|
         | |codecov|
-        | |codacy|
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
         | |commits-since|
@@ -25,17 +24,9 @@ Overview
     :alt: Travis-CI Build Status
     :target: https://travis-ci.org/whitesmith/auto-tune
 
-.. |requires| image:: https://requires.io/github/whitesmith/auto-tune/requirements.svg?branch=master
-    :alt: Requirements Status
-    :target: https://requires.io/github/whitesmith/auto-tune/requirements/?branch=master
-
 .. |codecov| image:: https://codecov.io/github/whitesmith/auto-tune/coverage.svg?branch=master
     :alt: Coverage Status
     :target: https://codecov.io/github/whitesmith/auto-tune
-
-.. |codacy| image:: https://img.shields.io/codacy/REPLACE_WITH_PROJECT_ID.svg
-    :target: https://www.codacy.com/app/whitesmith/auto-tune
-    :alt: Codacy Code Quality Status
 
 .. |version| image:: https://img.shields.io/pypi/v/auto-tune.svg
     :alt: PyPI Package latest release

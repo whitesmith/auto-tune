@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name='auto-tune',
-    version='0.0.1',
+    version='0.0.2',
     license='MIT license',
     description='Estimate hyper-parameter search using evolutionary algorithms',
     long_description='%s\n%s' % (

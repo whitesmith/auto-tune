@@ -32,9 +32,9 @@ Overview
     :alt: PyPI Package latest release
     :target: https://pypi.python.org/pypi/auto-tune
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/whitesmith/auto-tune/v0.0.1.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/whitesmith/auto-tune/v0.0.2.svg
     :alt: Commits since latest release
-    :target: https://github.com/whitesmith/auto-tune/compare/v0.0.1...master
+    :target: https://github.com/whitesmith/auto-tune/compare/v0.0.2...master
 
 .. |wheel| image:: https://img.shields.io/pypi/wheel/auto-tune.svg
     :alt: PyPI Wheel

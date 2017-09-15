@@ -2,6 +2,7 @@ import numpy as np
 
 from sklearn.model_selection import cross_val_score
 
+
 class Individual(object):
     def __init__(self, model, genome, data, target, phenome=None):
         self.model = model
@@ -10,7 +11,7 @@ class Individual(object):
         self.data = data
         self.target = target
 
-        if self.phenome == None:
+        if self.phenome is None:
             self.phenome = [g.random() for g in self.genome]
 
         for i in range(len(self.phenome)):

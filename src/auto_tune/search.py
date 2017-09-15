@@ -5,6 +5,7 @@ import copy
 from auto_tune.evo.genes import AbstractGene
 from auto_tune.evo.individual import Individual
 
+
 class GPSearchCV(object):
     def __init__(self, model, params, pop_size, n_child, n_iter, data, target, pop=None):
         if not hasattr(params, '__iter__'):
@@ -22,7 +23,7 @@ class GPSearchCV(object):
         self.data = data
         self.target = target
 
-        if self.pop == None:
+        if self.pop is None:
             self.generate_pop()
         self.best_score = 0
         self.best_estimator = self.pop[0]
@@ -38,7 +39,7 @@ class GPSearchCV(object):
         for i in range(self.n_child):
             parents = []
             for j in range(num_parents):
-                r = random.uniform(0,sum_score)
+                r = random.uniform(0, sum_score)
                 s = 0
                 for ind in self.pop:
                     s += ind.mean_score
@@ -61,7 +62,7 @@ class GPSearchCV(object):
     def step(self):
         self.generate_offspring()
         self.environmental_selection()
-        
+
         for ind in self.pop:
             if ind.mean_score > self.best_score:
                 self.best_estimator = ind

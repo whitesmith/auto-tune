@@ -17,9 +17,6 @@ class Individual(object):
         for i in range(len(self.phenome)):
             setattr(self.model, self.genome[i].param, self.phenome[i])
 
-        self.fit()
-
-    def fit(self):
         self.scores = cross_val_score(self.model, self.data, self.target, cv=5)
         self.mean_score = np.mean(self.scores)
         self.std_score = np.std(self.scores)

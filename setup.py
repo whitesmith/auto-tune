@@ -67,6 +67,9 @@ setup(
     ],
     install_requires=[
         'click',
+        'numpy',
+        'scipy',
+        'scikit-learn'
     ],
     extras_require={
         # eg:

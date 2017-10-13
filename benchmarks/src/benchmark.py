@@ -3,6 +3,7 @@ import json
 import time
 
 import scipy
+import scipy.stats
 import numpy as np
 
 from sklearn import datasets
@@ -33,7 +34,7 @@ parser.add_argument("--search-cv", dest='search_cv', type=int, default=3, help="
 parser.add_argument("--search-auto-tune-pop-size", dest='search_auto_tune_pop_size', type=int, default=20, help='auto-tune population size (default: 20)')
 parser.add_argument("--search-auto-tune-num-child", dest='search_auto_tune_num_child', type=int, default=5, help='auto-tune number of children (default: 5)')
 parser.add_argument("--search-auto-tune-num-gen", dest='search_auto_tune_num_gen', type=int, default=10, help='auto-tune number of generations (default: 10)')
-parser.add_argument("--search-auto-tune-params", dest='search_auto_tune_params', default='["RealGene(\\"C\\", 0.001, 10)"]', help='auto-tune search params in the form of a json to be evaled (default: ["RealGene(\\"C\\", 0.001, 10)"]')
+parser.add_argument("--search-auto-tune-params", dest='search_auto_tune_params', default='["RealGene(\\"C\\", scipy.stats.uniform(0.000001, 100), minimum=0.00000001)"]', help='auto-tune search params in the form of a json to be evaled (default: "[\\"RealGene(\\\\"C\\\\", scipy.stats.uniform(0.000001, 100))\\"]"')
 parser.add_argument("--search-grid-params", dest='search_grid_params', default='{"C": [0.001, 0.01, 0.1, 1, 10]}', help='search params for the grid method in the form of a JSON string to be converted to a dict (default: {"kernel": ["rbf"], "C": [1,10]})')
 
 args = parser.parse_args()
@@ -67,6 +68,7 @@ if search_cv <= 0:
 # Get auto_tune search params
 safe_dict = {}
 safe_dict['RealGene'] = RealGene
+safe_dict['scipy.stats.uniform'] = scipy.stats.uniform
 
 search_auto_tune_params_unprocessed = json.loads(args.search_auto_tune_params)
 if type(search_auto_tune_params_unprocessed) is not list:
@@ -75,7 +77,9 @@ if type(search_auto_tune_params_unprocessed) is not list:
 
 search_auto_tune_params = []
 for p in search_auto_tune_params_unprocessed:
-    search_auto_tune_params.append(eval(p, {"__builtins__":None}, safe_dict))
+    # TODO fix security issue with eval, possible solution, but still doesnt work:
+    # search_auto_tune_params.append(eval(p, {"__builtins__":None}, safe_dict))
+    search_auto_tune_params.append(eval(p))
 
 # Get grid search params
 search_grid_params = json.loads(args.search_grid_params)
@@ -86,20 +90,21 @@ if type(search_grid_params) is not dict:
 # Run search cv
 start = time.time()
 if args.search_method == "auto-tune":
-    search = GPSearchCV(algorithm, search_auto_tune_params, args.search_auto_tune_pop_size, args.search_auto_tune_num_child, args.search_auto_tune_num_gen, dataset.data, dataset.target)
+    search = GPSearchCV(algorithm, search_auto_tune_params, args.search_auto_tune_pop_size, args.search_auto_tune_num_child, args.search_auto_tune_num_gen, dataset.data, dataset.target, verbose=1)
     for i in range(args.search_auto_tune_num_gen):
         print("----------------")
         print("Generation #%d" % i)
         print("----------------")
         search.step()
         print(search.best_estimator.model)
-        print(search.best_estimator.phenome)
+        print(search.best_estimator.genome)
         print(search.best_estimator.mean_score)
         print()
 elif args.search_method == "grid":
     search = GridSearchCV(algorithm, search_grid_params, cv=search_cv)
     search.fit(dataset.data, dataset.target)
     report(search.cv_results_)
+# TODO implement random search_method
 
 stop = time.time()
 print("Method took %.2f seconds" % (stop-start))

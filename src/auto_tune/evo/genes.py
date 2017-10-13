@@ -4,23 +4,47 @@ import random
 
 class AbstractGene(object):
     """Abstract Gene Class"""
-    def __init__(self, param):
+    def __init__(self, param, value):
         self.param = param
+        self.value = value
 
-    def random(self):
-        raise NotImplementedError("random() not implemented")
+    def __str__(self):
+        return "%s: %s" % (self.param, self.value)
+
+    def __repr__(self):
+        return "AbstractGene(%s, %s)" % (self.param, self.value)
+
+    def random_value(self):
+        raise NotImplementedError("random_value(self) not implemented")
 
 
 class RealGene(AbstractGene):
-    def __init__(self, param, start, stop):
-        super().__init__(param)
-        if(stop <= start):
-            raise ValueError("Stop should be higher than start")
-        self.start = start
-        self.stop = stop
+    def __init__(self, param, dist, minimum=None, maximum=None, value=None):
+        super().__init__(param, value)
 
-    def random(self):
-        return random.uniform(self.start, self.stop)
+        if(minimum != None and maximum != None and maximum <= minimum):
+            raise ValueError("Maximum should be higher than minimum")
 
-    def recombine(self, a, b):
-        return np.mean([a, b])
+        self.dist = dist
+        self.minimum = minimum
+        self.maximum = maximum
+
+        if value == None:
+            self.random_value()
+
+    def random_value(self):
+        self.value = self.dist.rvs()
+        return self.value
+
+    def global_mutation(self):
+        self.random_value()
+
+    def local_mutation(self):
+        loc = self.value
+        scale = self.dist.std() / 5.0
+        self.value = np.random.normal(loc=loc, scale=scale)
+        if self.minimum != None:
+            self.value = max(self.minimum, self.value)
+        if self.maximum != None:
+            self.value = min(self.maximum, self.value)
+

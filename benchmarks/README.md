@@ -26,6 +26,12 @@ python src/benchmark.py
 python src/benchmark.py --help
 ```
 
+* See and run the bash script for an example
+
+```bash
+sh benchmark.sh wine
+```
+
 ### How to run when developing auto-tune
 
 * Instal requirements

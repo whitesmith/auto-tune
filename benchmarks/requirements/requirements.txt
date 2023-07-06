@@ -5,7 +5,19 @@
 #    pip-compile --output-file requirements.txt requirements.in
 #
 auto-tune==0.0.2
-click==6.7                # via auto-tune
-numpy==1.13.1
+    # via -r requirements.in
+click==6.7
+    # via auto-tune
+numpy==1.25.0
+    # via
+    #   -r requirements.in
+    #   auto-tune
+    #   scipy
 scikit-learn==0.19.0
-scipy==0.19.1
+    # via
+    #   -r requirements.in
+    #   auto-tune
+scipy==1.10.0
+    # via
+    #   -r requirements.in
+    #   auto-tune
